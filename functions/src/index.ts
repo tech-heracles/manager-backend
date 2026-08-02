@@ -5,3 +5,5 @@ export { createCompany } from "./companies/createCompany";
 export { createBusinessUnit } from "./businessUnits/createBusinessUnit";
 export { assignPos } from "./businessUnits/assignPos";
 export { unassignPos } from "./businessUnits/unassignPos";
+export { setErpConfig } from "./erp/setErpConfig";
+export { getErpConfig } from "./erp/getErpConfig";
