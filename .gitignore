@@ -67,4 +67,7 @@ node_modules/
 
 # dataconnect generated files
 .dataconnect
+
+#emulator for dev
 .agents/
+emulator-data/
