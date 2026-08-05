@@ -61,7 +61,9 @@ function validateConfig(erpType: ErpType, config: Record<string, unknown>): Reco
   }
 }
 
-export const setErpConfig = functions.onCall(async (request) => {
+export const setErpConfig = functions.onCall({
+    region: "europe-west1",
+  },async (request) => {
   const caller = request.auth;
   if (!caller) {
     throw new functions.HttpsError("unauthenticated", "Duhet te jesh i loguar.");

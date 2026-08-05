@@ -5,6 +5,7 @@ if (admin.apps.length === 0) admin.initializeApp();
 
 export const onBusinessUnitDelete = functions.onDocumentDeleted(
   "companies/{companyId}/businessUnits/{buId}",
+  
   async (event) => {
     const { companyId, buId } = event.params;
 

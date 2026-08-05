@@ -3,7 +3,9 @@ import * as admin from "firebase-admin";
 
 if (admin.apps.length === 0) admin.initializeApp();
 
-export const getErpConfig = functions.onCall(async (request) => {
+export const getErpConfig = functions.onCall({
+    region: "europe-west1",
+  },async (request) => {
   const caller = request.auth;
   if (!caller) {
     throw new functions.HttpsError("unauthenticated", "Duhet te jesh i loguar.");

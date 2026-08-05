@@ -7,7 +7,9 @@ interface LookupCompanyData {
   email: string;
 }
 
-export const lookupCompanyForEmail = functions.onCall(async (request) => {
+export const lookupCompanyForEmail = functions.onCall({
+    region: "europe-west1",
+  },async (request) => {
   const data = request.data as LookupCompanyData;
 
   if (!data.email || !data.email.trim()) {

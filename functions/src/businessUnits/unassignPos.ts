@@ -8,7 +8,9 @@ interface UnassignPosData {
   posId: string;
 }
 
-export const unassignPos = functions.onCall(async (request) => {
+export const unassignPos = functions.onCall({
+    region: "europe-west1",
+  },async (request) => {
   const caller = request.auth;
   if (!caller) {
     throw new functions.HttpsError("unauthenticated", "Duhet te jesh i loguar.");

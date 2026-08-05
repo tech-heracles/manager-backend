@@ -8,7 +8,9 @@ interface CreateCompanyData {
   displayName?: string;
 }
 
-export const createCompany = functions.onCall(async (request) => {
+export const createCompany = functions.onCall({
+    region: "europe-west1",
+  },async (request) => {
   const caller = request.auth;
 
   if (!caller) {

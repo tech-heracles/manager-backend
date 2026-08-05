@@ -7,4 +7,4 @@ export { assignPos } from "./businessUnits/assignPos";
 export { unassignPos } from "./businessUnits/unassignPos";
 export { setErpConfig } from "./erp/setErpConfig";
 export { getErpConfig } from "./erp/getErpConfig";
-export { lookupCompanyForEmail } from "../src/auth/lookupCompanyForEmail";
+export { lookupCompanyForEmail } from "./auth/lookupCompanyForEmail";

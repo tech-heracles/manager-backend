@@ -11,7 +11,9 @@ interface InviteUserData {
   businessUnitIds?: string[];
 }
 
-export const inviteUser = functions.onCall(async (request) => {
+export const inviteUser = functions.onCall({
+  region: "europe-west1",
+}, async (request) => {
   const caller = request.auth;
 
   if (!caller) {

@@ -8,7 +8,9 @@ interface CreateBusinessUnitData {
   address?: string;
 }
 
-export const createBusinessUnit = functions.onCall(async (request) => {
+export const createBusinessUnit = functions.onCall({
+    region: "europe-west1",
+  },async (request) => {
   const caller = request.auth;
   if (!caller) {
     throw new functions.HttpsError("unauthenticated", "Duhet te jesh i loguar.");
