@@ -85,6 +85,10 @@ export const inviteUser = functions.onCall({
     .set({
       displayName: data.displayName.trim(),
       email: isOperator ? null : email,
+      // Retrievable server-side (e.g. by listOperatorsForBusinessUnit for
+      // POS sign-in) without surfacing the meaningless synthetic address in
+      // the Manager Users screen, which reads "email" only.
+      authEmail: isOperator ? email : null,
       role: data.role,
       businessUnitIds: data.businessUnitIds || [],
       createdAt: admin.firestore.FieldValue.serverTimestamp(),

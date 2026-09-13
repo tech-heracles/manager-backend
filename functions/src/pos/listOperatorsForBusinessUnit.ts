@@ -33,7 +33,7 @@ export const listOperatorsForBusinessUnit = functions.onCall({
     .map((d) => ({
       uid: d.id,
       displayName: d.data().displayName as string,
-      email: d.data().email as string,
+      email: d.data().authEmail as string,
     }));
 
   return { operators };
