@@ -27,6 +27,20 @@ service cloud.firestore {
           && request.auth.token.role in ['operator', 'supervisor', 'admin']
           && (request.auth.token.role != 'operator' || buId in request.auth.token.businessUnitIds);
       }
+
+      // Operator PINs live apart from the plain user doc (which is
+      // company-wide readable) so they stay scoped to: Admin, the user
+      // themselves, or a Supervisor who shares a business unit with them.
+      match /users/{uid}/secure/{docId} {
+        allow read: if belongsToCompany(companyId) && (
+          request.auth.token.role == 'admin' ||
+          request.auth.uid == uid ||
+          (request.auth.token.role == 'supervisor' &&
+            get(/databases/$(database)/documents/companies/$(companyId)/users/$(uid))
+              .data.businessUnitIds.hasAny(request.auth.token.businessUnitIds))
+        );
+        allow write: if false;
+      }
     }
   }
 }

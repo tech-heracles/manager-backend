@@ -95,6 +95,19 @@ export const inviteUser = functions.onCall({
     });
 
   if (isOperator) {
+    // Kept separately from the user doc above (which is company-wide
+    // readable) so the PIN itself stays scoped via firestore.rules to
+    // Admin / the operator / their own Supervisor.
+    await admin
+      .firestore()
+      .collection("companies")
+      .doc(data.companyId)
+      .collection("users")
+      .doc(userRecord.uid)
+      .collection("secure")
+      .doc("credentials")
+      .set({ pin: data.pin });
+
     // No reset link for operators - the PIN the Admin just set is already
     // active, so we just hand it back to display/share once.
     return { uid: userRecord.uid, pin: data.pin };

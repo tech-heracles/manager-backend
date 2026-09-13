@@ -58,5 +58,7 @@ export const resetOperatorPin = functions.onCall({
     throw new functions.HttpsError("internal", `Ndryshimi i PIN-it deshtoi: ${message}`);
   }
 
+  await userRef.collection("secure").doc("credentials").set({ pin: data.pin });
+
   return { ok: true };
 });
