@@ -12,3 +12,4 @@ export { updateBusinessUnit } from "./businessUnits/updateBusinessUnit";
 export { deleteBusinessUnit } from "./businessUnits/deleteBusinessUnit";
 export { updateUser } from "./auth/updateUser";
 export { setUserActive } from "./auth/setUserActive";
+export { resetOperatorPin } from "./auth/resetOperatorPin";
