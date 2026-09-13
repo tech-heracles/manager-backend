@@ -8,3 +8,7 @@ export { getErpConfig } from "./erp/getErpConfig";
 export { lookupCompanyForEmail } from "./auth/lookupCompanyForEmail";
 export { updateCompanyConfig } from "./companies/updateCompanyConfig";
 export { testErpConnection } from "./erp/testErpConnection";
+export { updateBusinessUnit } from "./businessUnits/updateBusinessUnit";
+export { deleteBusinessUnit } from "./businessUnits/deleteBusinessUnit";
+export { updateUser } from "./auth/updateUser";
+export { setUserActive } from "./auth/setUserActive";
