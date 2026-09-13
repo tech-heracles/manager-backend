@@ -13,3 +13,8 @@ export { deleteBusinessUnit } from "./businessUnits/deleteBusinessUnit";
 export { updateUser } from "./auth/updateUser";
 export { setUserActive } from "./auth/setUserActive";
 export { resetOperatorPin } from "./auth/resetOperatorPin";
+export { listCompaniesForSetup } from "./pos/listCompaniesForSetup";
+export { listBusinessUnitsForSetup } from "./pos/listBusinessUnitsForSetup";
+export { requestPosPairing } from "./pos/requestPosPairing";
+export { verifyPosPairing } from "./pos/verifyPosPairing";
+export { listOperatorsForBusinessUnit } from "./pos/listOperatorsForBusinessUnit";

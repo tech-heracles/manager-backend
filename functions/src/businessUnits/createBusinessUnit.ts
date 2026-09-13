@@ -6,6 +6,9 @@ if (admin.apps.length === 0) admin.initializeApp();
 interface CreateBusinessUnitData {
   name: string;
   address?: string;
+  code?: string;
+  defaultCustomerCode?: string;
+  defaultLocationCode?: string;
 }
 
 export const createBusinessUnit = functions.onCall({
@@ -41,6 +44,9 @@ export const createBusinessUnit = functions.onCall({
   await buRef.set({
     name: data.name.trim(),
     address: data.address?.trim() || null,
+    code: data.code?.trim() || null,
+    defaultCustomerCode: data.defaultCustomerCode || null,
+    defaultLocationCode: data.defaultLocationCode || null,
     createdAt: admin.firestore.FieldValue.serverTimestamp(),
   });
 
