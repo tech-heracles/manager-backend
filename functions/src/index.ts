@@ -7,3 +7,4 @@ export { setErpConfig } from "./erp/setErpConfig";
 export { getErpConfig } from "./erp/getErpConfig";
 export { lookupCompanyForEmail } from "./auth/lookupCompanyForEmail";
 export { updateCompanyConfig } from "./companies/updateCompanyConfig";
+export { testErpConnection } from "./erp/testErpConnection";
