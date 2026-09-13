@@ -36,12 +36,11 @@ export const getErpConfig = functions.onCall({
   }
 
   const integrationData = integrationSnap.data() || {};
-  const { password, ...safeConfig } = (integrationData.config as Record<string, unknown>) || {};
 
   return {
     configured: true,
     activeErpType,
-    config: safeConfig,
+    config: integrationData.config ?? {},
     updatedAt: integrationData.updatedAt ?? null,
   };
 });
