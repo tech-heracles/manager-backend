@@ -1,11 +1,6 @@
 {
   "indexes": [
     {
-      "collectionGroup": "pos",
-      "queryScope": "COLLECTION_GROUP",
-      "fields": [{ "fieldPath": "deviceId", "order": "ASCENDING" }]
-    },
-    {
       "collectionGroup": "users",
       "queryScope": "COLLECTION",
       "fields": [
