@@ -21,11 +21,40 @@ service cloud.firestore {
       // POS writes tickets directly (no Cloud Function round-trip) so the
       // sale screen stays fast and this doubles as the write path offline
       // persistence will later replay. Scoped to the caller's own BU.
+      //
+      // Table-bound tickets (BAR/RESTAURANT mode) are further scoped to
+      // the operator who claimed the table via tableClaims — everyone
+      // else can still read it (to show it as occupied/read-only) but
+      // not write. Free-form tickets (tableId null, e.g. simple/retail
+      // mode) keep the original shared-access behavior.
       match /businessUnits/{buId}/tickets/{ticketId} {
+        allow read: if belongsToCompany(companyId);
+        allow create: if belongsToCompany(companyId)
+          && request.auth.token.role in ['operator', 'supervisor', 'admin']
+          && (request.auth.token.role != 'operator' || buId in request.auth.token.businessUnitIds)
+          && (request.resource.data.tableId == null
+            || request.resource.data.operatorUid == request.auth.uid);
+        allow update, delete: if belongsToCompany(companyId)
+          && request.auth.token.role in ['operator', 'supervisor', 'admin']
+          && (request.auth.token.role != 'operator' || buId in request.auth.token.businessUnitIds)
+          && (request.auth.token.role in ['admin', 'supervisor']
+            || resource.data.tableId == null
+            || resource.data.operatorUid == request.auth.uid);
+      }
+
+      // Atomic arbiter for "claim a table": the client runs a transaction
+      // that reads this doc and only creates a ticket if it's free, so two
+      // operators tapping the same table at once can't both succeed. Once
+      // occupied, only the claiming operator can update/release it.
+      match /businessUnits/{buId}/tableClaims/{tableId} {
         allow read: if belongsToCompany(companyId);
         allow write: if belongsToCompany(companyId)
           && request.auth.token.role in ['operator', 'supervisor', 'admin']
-          && (request.auth.token.role != 'operator' || buId in request.auth.token.businessUnitIds);
+          && (request.auth.token.role != 'operator' || buId in request.auth.token.businessUnitIds)
+          && (request.auth.token.role in ['admin', 'supervisor']
+            || resource == null
+            || resource.data.status == 'free'
+            || resource.data.operatorUid == request.auth.uid);
       }
 
       // Operator PINs live apart from the plain user doc (which is
