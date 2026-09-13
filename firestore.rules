@@ -17,6 +17,16 @@ service cloud.firestore {
         allow read: if belongsToCompany(companyId);
         allow write: if false;
       }
+
+      // POS writes tickets directly (no Cloud Function round-trip) so the
+      // sale screen stays fast and this doubles as the write path offline
+      // persistence will later replay. Scoped to the caller's own BU.
+      match /businessUnits/{buId}/tickets/{ticketId} {
+        allow read: if belongsToCompany(companyId);
+        allow write: if belongsToCompany(companyId)
+          && request.auth.token.role in ['operator', 'supervisor', 'admin']
+          && (request.auth.token.role != 'operator' || buId in request.auth.token.businessUnitIds);
+      }
     }
   }
 }
