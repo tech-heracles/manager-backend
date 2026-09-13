@@ -21,7 +21,7 @@ interface TestErpConnectionData {
 }
 
 export const testErpConnection = functions.onCall(
-  { timeoutSeconds: 20, memory: "256MiB" },
+  { region: "europe-west1", timeoutSeconds: 20, memory: "256MiB" },
   async (request) => {
     const caller = request.auth;
     if (!caller) {
